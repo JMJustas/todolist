@@ -9,22 +9,12 @@ class EntryModel extends Model {
     super(qb, 'entries');
   }
 
-  find(criteria, cb) {
-    return super.find(criteria,
-      (err, rows) => {
-        if (err)
-          return cb(err);
-
-        rows = rows.map(EntryModel.decodeRow);
-        return cb(null, rows);
-      });
-  }
-
   /**
    * Decodes db row to Entry instance
    * @param row
    */
-  static decodeRow(row) {
+  decodeRow(row) {
+    row = super.decodeRow(row);
     row.completed = Boolean(row.completed);
     return row;
   }

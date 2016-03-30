@@ -27,16 +27,19 @@ class baseModel {
    * @return {Knex}                Executed Knex query
    */
   find(criteria, cb) {
+    criteria.deleted = false;
+
     return this.qb
       .table(this.table)
       .where(criteria)
       .then((res) => {
         if (!(res && res.length))
           res = [];
-
-        return cb(null, res);
+        return res
       })
-      .catch(cb);
+      .then((res) => res.map(this.decodeRow))
+      .catch(cb)
+      .asCallback(cb);
   }
 
   /**
@@ -77,21 +80,18 @@ class baseModel {
       .catch(cb);
   }
 
-  /**
-   * Executes a DELETE query and returns the res in a callback function
-   * @param  {Object}   criteria   Where conditions
-   * @param  {Function} cb         Execution callback
-   * @return {Knex}                Executed Knex query
-   */
   remove(criteria, cb) {
-    return this.qb
-      .table(this.table)
-      .delete()
-      .where(criteria)
-      .then((res) => {
-        return cb(null, res);
-      })
-      .catch(cb);
+    return this.update(criteria, {deleted: true}, cb);
+  }
+
+  /**
+   * Decode database row to entity.
+   * @param row
+   * @return {*}
+   */
+  decodeRow(row) {
+    delete row.deleted; //user does not need to see that
+    return row
   }
 }
 

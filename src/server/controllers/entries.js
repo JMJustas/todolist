@@ -32,7 +32,8 @@ class EntriesController {
    * @param {Function}  next   Callback to the Express.js middleware chain.
    * */
   static findOne(req, res, next) {
-    return model.find(req.params, (err, entries) => {
+    const query = {id: req.params.id};
+    return model.find(query, (err, entries) => {
       if (err)
         return next(err);
 
@@ -70,7 +71,7 @@ class EntriesController {
 
 
   /**
-   * Updates Entry and esponds with full entity data.
+   * Updates Entry and responds with full entity data.
    * @param {Object}    req    Express.js request object.
    * @param {Object}    res    Express.js response object.
    * @param {Function}  next   Callback to the Express.js middleware chain.
@@ -88,6 +89,14 @@ class EntriesController {
         return res.status(status.OK).jsonp(entries[0]);
       }
     );
+  }
+
+  static remove(req, res, next) {
+    return model.remove(req.params, (err) =>{
+      if (err)
+        return next(err);
+      return res.status(status.NO_CONTENT).end();
+    })
   }
 
 }

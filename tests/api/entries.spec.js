@@ -100,6 +100,22 @@ describe('Integration tests for Entries endpoint', () => {
       })
   });
 
+  it('should be able to delete single entry', (done) => {
+    const entry = testData[0];
+    client
+      .delete(`/entries/${entry.id}`)
+      .expect(status.NO_CONTENT)
+      .end((err) => {
+        if (err)
+          return done(err);
+
+        return client
+          .get(`/entries/${entry.id}`)
+          .expect(status.NOT_FOUND)
+          .end(done);
+      })
+  });
+
   /**
    * Makes request to API to retrieve entry by id (to ensure that resource
    * is accessible) and asserts if result matches original data.

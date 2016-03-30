@@ -15,7 +15,8 @@ module.exports = (app, models) => {
 
   app.route('/entries/:id')
     .get(EntriesController.findOne)
-    .put(EntriesController.update);
+    .put(EntriesController.update)
+    .delete(EntriesController.remove);
 
   return app;
 };
