@@ -85,6 +85,21 @@ describe('Integration tests for Entries endpoint', () => {
       })
   });
 
+  it('should be able to mark entry as completed', (done) => {
+    const entry = _.assign({}, testData[0], {completed: true});
+    client
+      .put(`/entries/${entry.id}`)
+      .send(entry)
+      .expect(status.OK)
+      .expect('Content-type', 'application/json; charset=utf-8')
+      .end((err, response) => {
+        if (err)
+          return done(err);
+        response.body.should.eql(entry);
+        return assertEntry(entry, done);
+      })
+  });
+
   /**
    * Makes request to API to retrieve entry by id (to ensure that resource
    * is accessible) and asserts if result matches original data.

@@ -14,6 +14,8 @@ module.exports = (app, models) => {
     .post(EntriesController.create);
 
   app.route('/entries/:id')
-    .get(EntriesController.findOne);
+    .get(EntriesController.findOne)
+    .put(EntriesController.update);
+
   return app;
 };

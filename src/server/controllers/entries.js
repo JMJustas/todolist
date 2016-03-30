@@ -1,5 +1,6 @@
 'use strict';
-
+const _ = require('lodash');
+const async = require('async');
 const model = require('../models/index').entries;
 const status = require('http-status');
 const createError = require('http-errors');
@@ -65,6 +66,28 @@ class EntriesController {
         return next(err);
       return res.status(status.CREATED).jsonp(entry);
     })
+  }
+
+
+  /**
+   * Updates Entry and esponds with full entity data.
+   * @param {Object}    req    Express.js request object.
+   * @param {Object}    res    Express.js response object.
+   * @param {Function}  next   Callback to the Express.js middleware chain.
+   */
+  static update(req, res, next) {
+    const data = _.omit(req.body, 'id');
+
+    return async.waterfall([
+      (done) => model.update(req.params, data, done),
+      (updateResult, done) => model.find(req.params, done)
+    ],
+      (err, entries) => {
+        if (err)
+          return next(err);
+        return res.status(status.OK).jsonp(entries[0]);
+      }
+    );
   }
 
 }
