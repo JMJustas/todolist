@@ -8,12 +8,18 @@ const path = require('path');
 const packageInfo = require('../../package.json');
 
 module.exports = (config) => {
+  //Connecting to database and registering models
+  const models = require('./models/').register(knex({
+    client: 'mysql',
+    connection: config.db
+  }));
 
   const app = express();
 
   // Setting application local variables
   app.locals.title = packageInfo.title;
   app.locals.version = packageInfo.version;
+  app.locals.stylesheet = 'public.css';
 
   // Enable HTML5 features
   app.enable('jsonp callback');
@@ -32,7 +38,7 @@ module.exports = (config) => {
   app.use(express.static(path.join(__dirname, '../../build')));
 
   // register routes
-  require('./routes/index')(app, config);
+  require('./routes/index')(app, models, config);
 
   // Add a default statusCode to the error
   app.use((err, req, res, next) => {

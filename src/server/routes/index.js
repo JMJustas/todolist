@@ -1,6 +1,7 @@
 'use strict';
+const EntriesController = require('../controllers/entries');
 
-module.exports = (app) => {
+module.exports = (app, models) => {
   app.route('/')
     .get((req, res) => {
       return res.render('index', {
@@ -8,5 +9,11 @@ module.exports = (app) => {
       });
     });
 
+  app.route('/entries')
+    .get(EntriesController.findAll)
+    .post(EntriesController.create);
+
+  app.route('/entries/:id')
+    .get(EntriesController.findOne);
   return app;
 };

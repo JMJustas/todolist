@@ -14,7 +14,8 @@
     "dev": "node_modules/.bin/parallelshell 'npm run watch:client' 'node_modules/.bin/livereload build' 'npm run watch:server'",
     "prebuild": "npm run clean && mkdir -p build",
     "start": "npm run build && node bin/start.js",
-    "test": "node_modules/.bin/jest",
+    "test:api": "node_modules/.bin/mocha tests/api --recursive",
+    "test": "npm run test:api",
     "watch:client": "node_modules/.bin/parallelshell 'npm run watch:styles' 'npm run watch:js'",
     "watch:styles": "node_modules/.bin/watch 'npm run build:styles' src/client/styles/ --include=\"src/client/styles/**/*.css\"",
     "watch:js": "node_modules/.bin/watch 'npm run build:js' src/client/js/ --include=\"src/client/**/*.js\"",
@@ -32,8 +33,11 @@
     "jest": "^0.1.40",
     "jest-cli": "^0.9.2",
     "livereload": "^0.4.1",
+    "mocha": "^2.4.5",
     "nodemon": "^1.8.1",
     "parallelshell": "^2.0.0",
+    "should": "^8.3.0",
+    "supertest": "^1.2.0",
     "watch": "git+https://git@github.com/pgraham/watch.git#glob-filter"
   },
   "dependencies": {
@@ -43,8 +47,10 @@
     "express": "^4.13.4",
     "font-awesome": "^4.5.0",
     "http-errors": "^1.4.0",
+    "http-status": "^0.2.1",
     "knex": "^0.10.0",
     "lodash": "^4.5.0",
-    "mysql": "^2.10.2"
+    "mysql": "^2.10.2",
+    "uuid": "^2.0.1"
   }
 }
