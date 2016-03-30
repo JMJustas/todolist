@@ -1,0 +1,23 @@
+# Dependency directory
+#
+node_modules
+
+# Optional npm cache directory
+.npm
+
+# OS X
+.DS_Store
+.localized
+
+# WebStorm project metadata stuff
+.idea/
+
+# IntelliJ
+*.iml
+
+# Vim swp files
+*.swp
+
+# build/
+build/
+
