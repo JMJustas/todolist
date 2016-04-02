@@ -16,11 +16,6 @@ module.exports = (config) => {
 
   const app = express();
 
-  // Setting application local variables
-  app.locals.title = packageInfo.title;
-  app.locals.version = packageInfo.version;
-  app.locals.stylesheet = 'public.css';
-
   // Enable HTML5 features
   app.enable('jsonp callback');
 
