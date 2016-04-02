@@ -56,7 +56,6 @@ describe('Tests for Entry component', () => {
 
     TestUtils.Simulate.click(completeButton);
 
-    console.log(onComplete.called);
     onComplete.called.should.equal(true);
     onComplete.callCount.should.equal(1);
     onComplete.getCall(0).args.length.should.equal(1);

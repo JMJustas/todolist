@@ -1,5 +1,5 @@
-import React from 'react';
 'use strict';
+import React from 'react';
 
 export default class Entry extends React.Component {
 
@@ -28,7 +28,7 @@ export default class Entry extends React.Component {
     }
 
     return (
-      <div>
+      <div className="entry">
         <span className="entry-title">
           {entry.title}
         </span>
