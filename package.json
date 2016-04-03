@@ -11,6 +11,7 @@
     "clean": "rm -rf build/",
     "dev": "node_modules/.bin/parallelshell 'npm run watch:client' 'npm run watch:server'",
     "prebuild": "npm run clean && mkdir -p build",
+    "prestart": "npm run build",
     "start": "node bin/start.js",
     "test:client": "karma start",
     "test:api": "node_modules/.bin/mocha tests/api --recursive",
