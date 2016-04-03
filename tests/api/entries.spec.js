@@ -5,7 +5,7 @@ const async = require ('async');
 const supertest = require('supertest');
 const status = require('http-status');
 
-const config = require('./config.json');
+const config = require('./../../config.test.json');
 const api = require('../../src/server')(config);
 const DbUtils = require('./dbUtils');
 
