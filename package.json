@@ -2,7 +2,7 @@
   "name": "todoapp",
   "version": "1.0.0",
   "description": "A simple TODO app",
-  "license": "unlicense",
+  "license": "MIT",
   "main": "./bin/start.js",
   "repository": {
     "type": "git",
@@ -22,7 +22,7 @@
     "pretest": "npm run initDb:test",
     "start": "node bin/start.js --config-file=config.json",
     "test:client": "karma start",
-    "test:api": "node_modules/.bin/mocha tests/api --recursive",
+    "test:api": "node_module/.bin/mocha tests/api --recursive",
     "test": "npm run test:client && npm run test:api",
     "watch:client": "node_modules/.bin/parallelshell 'npm run watch:styles' 'npm run watch:js'",
     "watch:styles": "node_modules/.bin/watch 'npm run build:styles' src/client/styles/ --include=\"src/client/styles/**/*.css\"",
