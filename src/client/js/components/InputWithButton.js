@@ -31,6 +31,7 @@ export default class InputWithButton extends React.Component {
   onSubmit(e) {
     e.preventDefault();
     this.props.onSubmit(this.state.value);
+    this.setState({value: ''});
   }
 
   onInputChange(e) {

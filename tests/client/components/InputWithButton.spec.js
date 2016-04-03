@@ -41,4 +41,20 @@ describe('Tests for InputWithButton component', () => {
     onSubmit.getCall(0).args[0].should.equal(testInput);
   });
 
+  it('should clear input field on submit', () => {
+    const onSubmit = sinon.spy();
+    const testInput = 'testInput';
+
+    const component = TestUtils
+      .renderIntoDocument(<InputWithButton onSubmit={onSubmit}/>);
+    const input = TestUtils.findRenderedDOMComponentWithTag(component, 'input');
+    const submitButton = TestUtils
+      .findRenderedDOMComponentWithClass(component, 'btn-submit');
+
+    input.value = testInput;
+    TestUtils.Simulate.change(input);
+    TestUtils.Simulate.click(submitButton);
+
+    Boolean(input.value).should.equal(false);
+  });
 });
