@@ -1,8 +1,7 @@
 'use strict';
+require('should');
 const _ = require('lodash');
-const async = require('async');
 const supertest = require('supertest');
-const should = require('should');
 const status = require('http-status');
 
 const config = require('./config.json');
@@ -50,12 +49,14 @@ describe('Integration tests for Entries endpoint', () => {
       .get('/entries')
       .expect(status.OK)
       .expect('Content-type', 'application/json; charset=utf-8')
-      .end((err, response) => {
-        if (err)
-          return done(err);
-        response.body.should.eql(testData);
-        done(err);
-      })
+      .end(verify);
+
+    function verify(err, response) {
+      if (err)
+        return done(err);
+      response.body.should.eql(testData);
+      done(err);
+    }
   });
 
   it('should be able to load one entry by id', (done) => {
@@ -73,16 +74,18 @@ describe('Integration tests for Entries endpoint', () => {
       .send(newEntry)
       .expect(status.CREATED)
       .expect('Content-type', 'application/json; charset=utf-8')
-      .end((err, response) => {
-        if (err)
-          return done(err);
+      .end(verify);
 
-        const result = response.body;
-        result.id.should.be.ok;
-        result.completed.should.equal(false);
-        result.title.should.equal(newEntry.title);
-        return assertEntry(result, done);
-      })
+    function verify(err, response) {
+      if (err)
+        return done(err);
+
+      const result = response.body;
+      Boolean(result.id).should.equal(true);
+      result.completed.should.equal(false);
+      result.title.should.equal(newEntry.title);
+      return assertEntry(result, done);
+    }
   });
 
   it('should be able to mark entry as completed', (done) => {
@@ -92,12 +95,14 @@ describe('Integration tests for Entries endpoint', () => {
       .send(entry)
       .expect(status.OK)
       .expect('Content-type', 'application/json; charset=utf-8')
-      .end((err, response) => {
-        if (err)
-          return done(err);
-        response.body.should.eql(entry);
-        return assertEntry(entry, done);
-      })
+      .end(verify);
+
+    function verify(err, response) {
+      if (err)
+        return done(err);
+      response.body.should.eql(entry);
+      return assertEntry(entry, done);
+    }
   });
 
   it('should be able to delete single entry', (done) => {
@@ -105,15 +110,17 @@ describe('Integration tests for Entries endpoint', () => {
     client
       .delete(`/entries/${entry.id}`)
       .expect(status.NO_CONTENT)
-      .end((err) => {
-        if (err)
-          return done(err);
+      .end(verify);
 
-        return client
-          .get(`/entries/${entry.id}`)
-          .expect(status.NOT_FOUND)
-          .end(done);
-      })
+    function verify(err) {
+      if (err)
+        return done(err);
+
+      return client
+        .get(`/entries/${entry.id}`)
+        .expect(status.NOT_FOUND)
+        .end(done);
+    }
   });
 
   /**
@@ -121,9 +128,11 @@ describe('Integration tests for Entries endpoint', () => {
    * is accessible) and asserts if result matches original data.
    * @param {Object}    entry     entry to check
    * @param {Function}  done      Asynchronous callback
+   *
+   * @return {*} nothing
    */
   function assertEntry(entry, done) {
-    entry.id.should.be.ok;
+    Boolean(entry.id).should.equal(true);
     return client
       .get(`/entries/${entry.id}`)
       .expect(status.OK)

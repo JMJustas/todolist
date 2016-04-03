@@ -7,11 +7,11 @@ const knex = require('knex');
 const Promise = require('bluebird');
 
 class DbUtils {
-  constructor (config) {
+  constructor(config) {
     this.knex = knex({
       client: 'mysql',
       connection: config.db
-    })
+    });
   }
 
   /**
@@ -22,6 +22,7 @@ class DbUtils {
    *
    * @param {Function}          cb      callback after all entries are inserted.
    *
+   * @return {*} nothing
    */
   populateTable(table, entries, cb) {
     if (!table || !table.length)
@@ -32,8 +33,8 @@ class DbUtils {
     if (!(entries instanceof Array))
       entries = [entries];
 
-    let inserts = entries.map((entry) => {
-      return this.knex.insert(entry).into(table)
+    const inserts = entries.map((entry) => {
+      return this.knex.insert(entry).into(table);
     });
 
     return Promise.all(inserts).asCallback(cb);
@@ -43,6 +44,7 @@ class DbUtils {
    * Truncates specified table
    * @param {String}    table   name of the table
    * @param {Function}  cb      callback function
+   * @return {*}    nothing
    */
   truncateTable(table, cb) {
     if (!table || !table.length)

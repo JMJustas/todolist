@@ -1,8 +1,6 @@
 /**
  * Holds controls for the todos list
  */
-'use strict';
-
 import React from 'react';
 import InputWithButton from './InputWithButton';
 
@@ -10,6 +8,18 @@ export default class ListControls extends React.Component {
 
   constructor(props) {
     super(props);
+  }
+
+  static get propTypes() {
+    return {
+      onAddEntry: React.PropTypes.func
+    };
+  }
+
+  static get defaultProps() {
+    return {
+      onSubmit: function () {}
+    };
   }
 
   render() {

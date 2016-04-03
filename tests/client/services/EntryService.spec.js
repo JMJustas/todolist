@@ -1,5 +1,4 @@
 'use strict';
-
 require('should');
 const Promise = require('es6-promise').Promise;
 const axios = require('axios');
@@ -85,7 +84,7 @@ describe('Tests for EntryService', () => {
 
     function verify() {
       backendRequest.called.should.equal(true);
-      var request = backendRequest.getCall(0);
+      const request = backendRequest.getCall(0);
       request.args[0].should.equal(`/entries/${id}`);
       request.args[1].should.eql({id, title: 'test', completed: true});
       service.data[0].completed.should.equal(true);

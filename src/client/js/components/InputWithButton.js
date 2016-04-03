@@ -1,17 +1,36 @@
 import React from 'react';
 
+/**
+ * Generic text input with submit button
+ */
 export default class InputWithButton extends React.Component {
 
   constructor(props) {
     super(props);
-    this.onClick = this.onClick.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
     this.state = {value: ''};
   }
 
-  onClick(e) {
+  static get propTypes() {
+    return {
+      submitTitle: React.PropTypes.string,
+      onSubmit: React.PropTypes.func,
+      placeholder: React.PropTypes.string
+    };
+  }
+
+  static get defaultProps() {
+    return {
+      onSubmit: function () {},
+      submitTitle: 'Submit',
+      placeholder: ''
+    };
+  }
+
+  onSubmit(e) {
     e.preventDefault();
-    this.props.onSubmit && this.props.onSubmit(this.state.value);
+    this.props.onSubmit(this.state.value);
   }
 
   onInputChange(e) {
@@ -30,7 +49,7 @@ export default class InputWithButton extends React.Component {
         />
 
         <button className="btn-submit"
-                onClick={this.onClick}
+                onClick={this.onSubmit}
           >{this.props.submitTitle}</button>
       </div>
       );

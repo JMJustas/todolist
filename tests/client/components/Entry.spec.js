@@ -1,8 +1,7 @@
 'use strict';
 
+require('should');
 const React = require('react');
-const ReactDom = require('react-dom');
-const should = require('should');
 const TestUtils = require('react/lib/ReactTestUtils');
 
 
@@ -18,19 +17,20 @@ describe('Tests for Entry component', () => {
   it('should render title', () => {
     const entry = testData[0];
     const component = TestUtils.renderIntoDocument(<Entry entry={entry}/>);
-    const title = TestUtils.findRenderedDOMComponentWithClass(component, 'entry-title');
+    const title = TestUtils
+      .findRenderedDOMComponentWithClass(component, 'entry-title');
 
     title.textContent.should.equal(entry.title);
   });
 
-   it('should render "complete" button if todo entry is not completed', () => {
-     const component = TestUtils
-       .renderIntoDocument(<Entry entry={testData[0]}/>);
+  it('should render "complete" button if todo entry is not completed', () => {
+    const component = TestUtils
+      .renderIntoDocument(<Entry entry={testData[0]}/>);
 
-     const buttons = TestUtils
-       .scryRenderedDOMComponentsWithClass(component, 'btn-complete');
+    const buttons = TestUtils
+      .scryRenderedDOMComponentsWithClass(component, 'btn-complete');
 
-     buttons.length.should.equal(1);
+    buttons.length.should.equal(1);
   });
 
   it('should NOT render "complete" button if todo entry is completed', () => {

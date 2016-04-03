@@ -1,31 +1,33 @@
-'use strict';
 import React from 'react';
 
+/**
+ * Renders an entry with a "complete" button
+ */
 export default class Entry extends React.Component {
 
-  constructor (props) {
+  constructor(props) {
     super(props);
-    if (!this.props.entry)
-      throw new Error('"entry" prop must be passed!');
 
     this.onClick = this.onClick.bind(this);
   }
 
-  onClick (e) {
-    e.preventDefault();
-    this.props.onComplete && this.props.onComplete(this.props.entry.id);
+  static get propTypes() {
+    return {
+      entry: React.PropTypes.object.isRequired,
+      onComplete: React.PropTypes.func
+    };
   }
 
-  render () {
+  static get defaultProps() {
+    return {
+      onComplete: function () {}
+    };
+  }
+
+
+  render() {
     const entry = this.props.entry;
-    let completeButton = null;
-    if (!entry.completed) {
-      completeButton = (
-        <button className="btn-complete"
-                onClick={this.onClick}
-        >COMPLETE</button>
-      );
-    }
+    let completeButton = entry.completed ? '' : this.renderButton();
 
     return (
       <div className="entry">
@@ -34,8 +36,19 @@ export default class Entry extends React.Component {
         </span>
 
         {completeButton}
-
       </div>
       );
   }
+
+  renderButton() {
+    return (
+      <button className="btn-complete" onClick={this.onClick} >COMPLETE</button>
+    );
+  }
+
+  onClick(e) {
+    e.preventDefault();
+    this.props.onComplete(this.props.entry.id);
+  }
+
 }

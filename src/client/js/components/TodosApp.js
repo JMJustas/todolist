@@ -1,22 +1,23 @@
-/**
- * Holds controls for the todos list
- */
-'use strict';
-
 import React from 'react';
 import ListControls from './ListControls';
 import EntriesList from './EntriesList';
 
+/**
+ * Manages todos list state and listens for data changes
+ */
 export default class TodosApp extends React.Component {
 
   constructor(props) {
     super(props);
-    this.entryService = this.props.entryService || null;
-
-    if (!this.entryService)
-      throw new Error('Missing entryService prop!');
+    this.entryService = this.props.entryService;
     this.state = {entries: []};
     this.dataUpdated = this.dataUpdated.bind(this);
+  }
+
+  static get propTypes() {
+    return {
+      entryService: React.PropTypes.object.isRequired
+    };
   }
 
   componentDidMount() {

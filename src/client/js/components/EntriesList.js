@@ -1,17 +1,32 @@
-'use strict';
 import React from 'react';
 
 import Entry from './Entry';
 
+/**
+ * Takes care of rendering List of todos. Filters out completed todos
+ */
 export default class EntriesList extends React.Component {
 
-  constructor (props) {
+  constructor(props) {
     super(props);
   }
 
-  render () {
+  static get propTypes() {
+    return {
+      entries: React.PropTypes.array,
+      onComplete: React.PropTypes.func
+    };
+  }
 
-    const entries = this.props.entries || [];
+  static get defaultProps() {
+    return {
+      entries: []
+    };
+  }
+
+  render() {
+
+    const entries = this.props.entries;
     const entryComponents = entries
       .filter((entry) => !entry.completed)
       .map((entry) => {
