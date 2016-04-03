@@ -59,6 +59,20 @@ describe('Integration tests for Entries endpoint', () => {
     }
   });
 
+  it('should be able to load all only not completed entries', (done) => {
+    client
+      .get('/entries?completed=false')
+      .expect(status.OK)
+      .expect('Content-type', 'application/json; charset=utf-8')
+      .end(verify);
+
+    function verify(err, response) {
+      if (err)
+        return done(err);
+      response.body.should.eql([testData[0]]);
+      done(err);
+    }
+  });
   it('should be able to load one entry by id', (done) => {
     const entry = testData[0];
     return assertEntry(entry, done);

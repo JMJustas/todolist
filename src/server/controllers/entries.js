@@ -16,9 +16,11 @@ class EntriesController {
    * @param {Object}    req    Express.js request object.
    * @param {Object}    res    Express.js response object.
    * @param {Function}  next   Callback to the Express.js middleware chain.
+   * @return {undefined}
    * */
   static findAll(req, res, next) {
-    return model.find({}, (err, entries) => {
+    const query = _.pick(req.query, 'completed');
+    return model.find(query, (err, entries) => {
       if (err)
         return next(err);
       return res.jsonp(entries);
@@ -30,6 +32,7 @@ class EntriesController {
    * @param {Object}    req    Express.js request object.
    * @param {Object}    res    Express.js response object.
    * @param {Function}  next   Callback to the Express.js middleware chain.
+   * @return {undefined}
    * */
   static findOne(req, res, next) {
     const query = {id: req.params.id};
@@ -50,11 +53,11 @@ class EntriesController {
    * @param {Object}    req    Express.js request object.
    * @param {Object}    res    Express.js response object.
    * @param {Function}  next   Callback to the Express.js middleware chain.
+   * @return {undefined}
    */
   static create(req, res, next) {
-    if (!req.body.title) {
-      return next(createError(status.BAD_REQUEST, 'Missing "title" field!'))
-    }
+    if (!req.body.title)
+      return next(createError(status.BAD_REQUEST, 'Missing "title" field!'));
 
     const entry = {
       title: req.body.title,
@@ -62,11 +65,11 @@ class EntriesController {
       id: uuid.v1()
     };
 
-    return model.create(entry, (err) => {
+    model.create(entry, (err) => {
       if (err)
         return next(err);
       return res.status(status.CREATED).jsonp(entry);
-    })
+    });
   }
 
 
@@ -75,6 +78,7 @@ class EntriesController {
    * @param {Object}    req    Express.js request object.
    * @param {Object}    res    Express.js response object.
    * @param {Function}  next   Callback to the Express.js middleware chain.
+   * @return {undefined}
    */
   static update(req, res, next) {
     const data = _.omit(req.body, 'id');
@@ -91,12 +95,19 @@ class EntriesController {
     );
   }
 
+  /**
+   * Marks Entry as removed in database.
+   * @param {Object}    req    Express.js request object.
+   * @param {Object}    res    Express.js response object.
+   * @param {Function}  next   Callback to the Express.js middleware chain.
+   * @return {undefined}
+   */
   static remove(req, res, next) {
-    return model.remove(req.params, (err) =>{
+    return model.remove(req.params, (err) => {
       if (err)
         return next(err);
       return res.status(status.NO_CONTENT).end();
-    })
+    });
   }
 
 }
