@@ -51,6 +51,7 @@
     "watch": "git+https://git@github.com/pgraham/watch.git#glob-filter"
   },
   "dependencies": {
+    "axios": "^0.9.1",
     "body-parser": "^1.15.0",
     "ejs": "^2.4.1",
     "express": "^4.13.4",
