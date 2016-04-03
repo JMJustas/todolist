@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TodosApp from './components/TodosApp';
-import EntryService from './services/EntryService';
+import Layout from './Layout';
 
 const app = document.getElementById('app');
-ReactDOM.render(<TodosApp entryService={new EntryService}/>, app);
+ReactDOM.render(<Layout/>, app);

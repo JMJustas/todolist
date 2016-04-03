@@ -41,17 +41,31 @@ export default class InputWithButton extends React.Component {
   render() {
 
     return (
-      <div className="entry">
-        <input type="text"
-          placeholder={this.props.placeholder}
-          onChange={this.onInputChange}
-          value={this.state.value}
-        />
-
-        <button className="btn-submit"
-                onClick={this.onSubmit}
-          >{this.props.submitTitle}</button>
+      <div className="input-group">
+        {this.renderInput()}
+        <span className="input-group-btn">
+          {this.renderButton()}
+        </span>
       </div>
       );
+  }
+
+  renderInput() {
+    return (
+      <input className="form-control"
+             type="text"
+             placeholder={this.props.placeholder}
+             onChange={this.onInputChange}
+             value={this.state.value}
+      />
+    );
+  }
+
+  renderButton() {
+    return (
+      <button className="btn-submit btn btn-secondary"
+              onClick={this.onSubmit}
+      >{this.props.submitTitle}</button>
+    );
   }
 }

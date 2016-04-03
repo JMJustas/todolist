@@ -35,7 +35,7 @@ export default class TodosApp extends React.Component {
 
   render() {
     return (
-        <div className="Todos-App">
+        <div className="todos-app col-xs-12 col-sm-4 col-sm-offset-4">
           <ListControls onAddEntry={this.entryService.create}/>
           <EntriesList entries={this.state.entries}
                        onComplete={this.entryService.complete}

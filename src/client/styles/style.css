@@ -1,0 +1,38 @@
+html, body {
+  height: 100%;
+  background-color: lightgrey;
+}
+
+header.container{
+  height: 2em;
+  font-size: 3em;
+  background-color: royalblue;
+  color: whitesmoke;
+}
+
+.container {
+  background-color: white;
+}
+
+.full-height {
+  height: 100%;
+  min-height: 100%;
+}
+
+.todos-app {
+  margin-top: 10px;
+}
+
+.entries-list {
+  -webkit-padding-start: 0px;
+  margin-top: 5px;
+}
+.entries-list .entry {
+  padding-top: 5px;
+  list-style: none;
+
+}
+
+.entry-title {
+  margin-left: 5px;
+}

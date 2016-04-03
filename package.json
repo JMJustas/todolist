@@ -9,10 +9,9 @@
     "url": "https://github.com/JMJustas/todolist.git"
   },
   "scripts": {
-    "build:fonts": "cp -r node_modules/font-awesome/fonts build/fonts",
     "build:styles": "cp src/client/styles/style.css build/",
     "build:js": "webpack",
-    "build": "npm run build:js && npm run build:fonts && npm run build:styles",
+    "build": "npm run build:js && npm run build:styles",
     "clean": "rm -rf build/",
     "dev": "parallelshell 'npm run watch:client' 'npm run watch:server'",
     "initDb": "node ./bin/initDb --config-file=./config.json",

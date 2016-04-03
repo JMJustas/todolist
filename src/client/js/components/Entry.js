@@ -30,19 +30,21 @@ export default class Entry extends React.Component {
     let completeButton = entry.completed ? '' : this.renderButton();
 
     return (
-      <div className="entry">
+      <li className="entry">
+        {completeButton}
         <span className="entry-title">
           {entry.title}
         </span>
 
-        {completeButton}
-      </div>
+      </li>
       );
   }
 
   renderButton() {
     return (
-      <button className="btn-complete" onClick={this.onClick} >COMPLETE</button>
+      <button className="btn-complete btn btn-default " onClick={this.onClick}>
+        <span className="fa fa-check"></span>
+      </button>
     );
   }
 

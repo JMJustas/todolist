@@ -37,9 +37,9 @@ export default class EntriesList extends React.Component {
       });
 
     return (
-      <div className="entries-list">
+      <ul className="entries-list">
         {entryComponents}
-      </div>
+      </ul>
       );
   }
 }
