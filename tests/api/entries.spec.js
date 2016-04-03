@@ -1,6 +1,7 @@
 'use strict';
 require('should');
 const _ = require('lodash');
+const async = require ('async');
 const supertest = require('supertest');
 const status = require('http-status');
 
@@ -59,6 +60,25 @@ describe('Integration tests for Entries endpoint', () => {
     }
   });
 
+  it ('should provide an empty array when no entries match query', (done) => {
+    async.waterfall([
+      (dn) => db.truncateTable('entries', dn),
+      (dbResp, dn) => client
+        .get('/entries')
+        .expect(status.OK)
+        .expect('Content-type', 'application/json; charset=utf-8')
+        .end(dn)
+    ],
+      verify);
+
+    function verify(err, response) {
+      if (err)
+        return done(err);
+      response.body.should.eql([]);
+      done(err);
+    }
+  });
+
   it('should be able to load all only not completed entries', (done) => {
     client
       .get('/entries?completed=false')
@@ -73,6 +93,7 @@ describe('Integration tests for Entries endpoint', () => {
       done(err);
     }
   });
+
   it('should be able to load one entry by id', (done) => {
     const entry = testData[0];
     return assertEntry(entry, done);
