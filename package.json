@@ -14,7 +14,7 @@
     "build:js": "webpack",
     "build": "npm run build:js && npm run build:fonts && npm run build:styles",
     "clean": "rm -rf build/",
-    "dev": "node_modules/.bin/parallelshell 'npm run watch:client' 'npm run watch:server'",
+    "dev": "parallelshell 'npm run watch:client' 'npm run watch:server'",
     "initDb": "node ./bin/initDb --config-file=./config.json",
     "initDb:test": "node ./bin/initDb --config-file=./config.test.json",
     "prebuild": "npm run clean && mkdir -p build",
@@ -22,12 +22,12 @@
     "pretest": "npm run initDb:test",
     "start": "node bin/start.js --config-file=config.json",
     "test:client": "karma start",
-    "test:api": "node_module/.bin/mocha tests/api --recursive",
+    "test:api": "mocha tests/api --recursive",
     "test": "npm run test:client && npm run test:api",
-    "watch:client": "node_modules/.bin/parallelshell 'npm run watch:styles' 'npm run watch:js'",
-    "watch:styles": "node_modules/.bin/watch 'npm run build:styles' src/client/styles/ --include=\"src/client/styles/**/*.css\"",
+    "watch:client": "parallelshell 'npm run watch:styles' 'npm run watch:js'",
+    "watch:styles": "watch 'npm run build:styles' src/client/styles/ --include=\"src/client/styles/**/*.css\"",
     "watch:js": "webpack --watch",
-    "watch:server": "node_modules/.bin/nodemon --watch src/server -x 'npm start'"
+    "watch:server": "nodemon --watch src/server -x 'npm start'"
   },
   "author": {
     "name": "Justinas Marcinka",
@@ -39,6 +39,7 @@
     "babel-loader": "^6.2.4",
     "babel-plugin-add-module-exports": "^0.1.2",
     "babel-plugin-react-html-attrs": "^2.0.0",
+    "babel-preset-es2015": "^6.6.0",
     "babel-preset-react": "^6.5.0",
     "eslint": "^2.6.0",
     "eslint-plugin-react": "^4.2.3",
