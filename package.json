@@ -1,6 +1,6 @@
 {
   "name": "todoapp",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "A simple TODO app",
   "main": "src/index/js",
   "scripts": {
@@ -10,9 +10,12 @@
     "build": "npm run build:js && npm run build:fonts && npm run build:styles",
     "clean": "rm -rf build/",
     "dev": "node_modules/.bin/parallelshell 'npm run watch:client' 'npm run watch:server'",
+    "initDb": "node ./bin/initDb --config-file=./config.json",
+    "initDb:test": "node ./bin/initDb --config-file=./config.test.json",
     "prebuild": "npm run clean && mkdir -p build",
-    "prestart": "npm run build",
-    "start": "node bin/start.js",
+    "prestart": "npm run build  && npm run initDb",
+    "pretest": "npm run initDb:test",
+    "start": "node bin/start.js --config-file=config.json",
     "test:client": "karma start",
     "test:api": "node_modules/.bin/mocha tests/api --recursive",
     "test": "npm run test:client && npm run test:api",
@@ -54,6 +57,7 @@
   "dependencies": {
     "axios": "^0.9.1",
     "body-parser": "^1.15.0",
+    "commander": "^2.9.0",
     "ejs": "^2.4.1",
     "express": "^4.13.4",
     "font-awesome": "^4.5.0",

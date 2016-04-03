@@ -1,7 +1,4 @@
-CREATE DATABASE `todoapp`;
-USE `todoapp`;
-
-CREATE TABLE `entries` (
+CREATE TABLE IF NOT EXISTS `entries` (
   `id` varchar(36) NOT NULL,
   `title` varchar(255) NOT NULL,
   `completed` tinyint(1) DEFAULT '0',
