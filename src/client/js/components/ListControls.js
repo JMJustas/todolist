@@ -15,7 +15,7 @@ export default class ListControls extends React.Component {
   render() {
     return (
       <div className="list-controls">
-        <InputWithButton onSubmit={this.props.onAddEntry}/>
+        <InputWithButton submitTitle="Add" onSubmit={this.props.onAddEntry}/>
       </div>
       );
   }

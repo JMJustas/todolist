@@ -14,10 +14,10 @@ describe('Tests for EntryList component', () => {
   it('should render input for adding new entry', () => {
     const component = TestUtils
       .renderIntoDocument(<ListControls/>);
-    const renderedInputElements = TestUtils
-      .scryRenderedComponentsWithType(component, InputWithButton);
+    const renderedInputElement = TestUtils
+      .findRenderedComponentWithType(component, InputWithButton);
 
-    renderedInputElements.length.should.equal(1);
+    renderedInputElement.props.submitTitle.should.equal('Add');
   });
 
   it('should register submit button events handler', () => {
